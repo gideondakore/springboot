@@ -5,7 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import javax.sql.DataSource;
 
 @SpringBootApplication
@@ -27,7 +26,5 @@ public class QuickstartApplication implements CommandLineRunner {
 		log.info("Datasource: " + dataSource.toString());
 		final JdbcTemplate restTemplate = new JdbcTemplate(dataSource);
 		restTemplate.execute("select 1");
-//		log.info(restTemplate.toString());
-
 	}
 }
