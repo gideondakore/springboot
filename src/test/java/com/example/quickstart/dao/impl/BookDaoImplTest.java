@@ -1,16 +1,17 @@
 package com.example.quickstart.dao.impl;
 
+import com.example.quickstart.domain.Author;
 import com.example.quickstart.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class BookDaoImplTest {
@@ -20,14 +21,17 @@ public class BookDaoImplTest {
     @InjectMocks
     private BookDaoImpl underTest;
 
+    @InjectMocks
+    private AuthorDaoImpl authorDao;
+
     @Test
     public void testThatCreateBookGenerateCorrectSql(){
-        Book book = TestDataUtil.createTestBook();
+        Book book = TestDataUtil.createTestBookA();
 
         underTest.create(book);
 
 
-        Mockito.verify(jdbcTemplate).update(
+        verify(jdbcTemplate).update(
                 eq("INSERT INTO books (isbn, title, author_id) VALUES (?, ?, ?)"),
                 eq("978-0-306-40615-7"),
                 eq("Beauty and the Beast"),
@@ -40,11 +44,19 @@ public class BookDaoImplTest {
 
         underTest.findOne("978-0-306-40615-7");
 
-        Mockito.verify(jdbcTemplate).query(
+        verify(jdbcTemplate).query(
                 eq("SELECT isbn, title, author_id FROM books WHERE isbn = ? LIMIT 1"),
                 ArgumentMatchers.any(BookDaoImpl.BookRowMapper.class),
                 eq("978-0-306-40615-7")
                 );
+    }
+
+    @Test
+    void testThatFindManyGeneratesCorrectSql(){
+        underTest.find();
+
+        verify(jdbcTemplate).query(eq("SELECT isbn, title, author_id FROM books"), ArgumentMatchers.any(BookDaoImpl.BookRowMapper.class));
+
     }
 
 }
