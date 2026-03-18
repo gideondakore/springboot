@@ -22,11 +22,7 @@ public class BookDaoImplTest {
 
     @Test
     public void testThatCreateBookGenerateCorrectSql(){
-        Book book = Book.builder()
-                .isbn("978-0-306-40615-7")
-                .title("Beauty and the Beast")
-                .authorId(1L)
-                .build();
+        Book book = TestDataUtil.createTestBook();
 
         underTest.create(book);
 
@@ -45,7 +41,7 @@ public class BookDaoImplTest {
         underTest.findOne("978-0-306-40615-7");
 
         Mockito.verify(jdbcTemplate).query(
-                eq("SELECT isbn, title, author_id FROM books WHERE id = ? LIMIT 1"),
+                eq("SELECT isbn, title, author_id FROM books WHERE isbn = ? LIMIT 1"),
                 ArgumentMatchers.any(BookDaoImpl.BookRowMapper.class),
                 eq("978-0-306-40615-7")
                 );

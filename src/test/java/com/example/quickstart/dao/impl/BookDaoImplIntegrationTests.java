@@ -1,33 +1,38 @@
 package com.example.quickstart.dao.impl;
 
-
 import com.example.quickstart.domain.Author;
+import com.example.quickstart.domain.Book;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class) // This is not necessary it is already added in the @SpringBootTest
-public class AuthorDaoImplIntegrationTests {
+class BookDaoImplIntegrationTests {
 
-    private AuthorDaoImpl underTest;
+    private BookDaoImpl underTest;
+    private AuthorDaoImpl authorDao;
 
     @Autowired
-    public AuthorDaoImplIntegrationTests(AuthorDaoImpl underTest){
+    public BookDaoImplIntegrationTests(BookDaoImpl underTest, AuthorDaoImpl authorDao){
         this.underTest = underTest;
+        this.authorDao = authorDao;
     }
 
-    @Test
-    public void testThatAuthorCanBeCreatedAndRecalled(){
 
+    @Test
+    void testThatBookCanBeCreatedAndRecalled(){
         Author author = TestDataUtil.createTestAuthor();
-        underTest.create(author);
-        Optional<Author> result = underTest.findOne(author.getId());
+        authorDao.create(author);
+        Book book = TestDataUtil.createTestBook();
+        System.out.println("BOOKS: " + book);
+        underTest.create(book);
+        Optional<Book> result = underTest.findOne(book.getIsbn());
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(author);
+        assertThat(result.get()).isEqualTo(book);
     }
 }
