@@ -36,7 +36,7 @@ public class BookDaoImplTest {
     }
 
     @Test
-    public void testThatFindOneGenerateTheCorrectSql(){
+    void testThatFindOneGenerateTheCorrectSql(){
 
         underTest.findOne("978-0-306-40615-7");
 

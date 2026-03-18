@@ -6,11 +6,27 @@ import com.example.quickstart.domain.Book;
 public class TestDataUtil {
     private TestDataUtil(){}
 
-    static Author createTestAuthor() {
+    static Author createTestAuthorA() {
         return Author.builder()
                 .id(1L)
                 .name("Abigail Rose")
                 .age(80)
+                .build();
+    }
+
+    static Author createTestAuthorB() {
+        return Author.builder()
+                .id(2L)
+                .name("Jesse Benz")
+                .age(23)
+                .build();
+    }
+
+    static Author createTestAuthorC() {
+        return Author.builder()
+                .id(3L)
+                .name("Andrew Casse")
+                .age(93)
                 .build();
     }
 
