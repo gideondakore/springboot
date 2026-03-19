@@ -59,14 +59,27 @@ public class AuthorDaoImplTest {
     @Test
     void testThatUpdateAuthorGenerateCorrectSql(){
         Author author = TestDataUtil.createTestAuthorA();
-        underTest.update(author.getId(), author);
+        underTest.update(2L, author);
 
         verify(jdbcTemplate).update(
-                "SELECT id = ?, name = ?, age = ? FROM authors WHERE id = ?",
+                "UPDATE authors SET id = ?, name = ?, age = ? WHERE id = ?",
                 1L,
                 "Abigail Rose",
                 80,
-                1L
+                2L
                 );
     }
+
+    @Test
+    void testThatDeleteAuthorGenerateCorrectSql(){
+        Author author = TestDataUtil.createTestAuthorA();
+        underTest.delete(author.getId());
+
+        verify(jdbcTemplate).update(
+                "DELETE FROM authors WHERE id = ?",
+                1L
+        );
+    }
+
+
 }
