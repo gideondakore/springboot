@@ -33,7 +33,7 @@ public class BookDaoImplTest {
 
         verify(jdbcTemplate).update(
                 eq("INSERT INTO books (isbn, title, author_id) VALUES (?, ?, ?)"),
-                eq("978-0-306-40615-7"),
+                eq("978-0-306-40615-1"),
                 eq("Beauty and the Beast"),
                 eq(1L)
         );

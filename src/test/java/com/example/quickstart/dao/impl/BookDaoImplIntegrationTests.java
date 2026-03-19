@@ -63,7 +63,8 @@ class BookDaoImplIntegrationTests {
         underTest.create(bookC);
 
         List<Book> result = underTest.find();
-        assertThat(result).hasSize(3).containsExactly(bookA, bookB, bookC);
-
+        assertThat(result)
+                .hasSize(3)
+                .containsExactly(bookA, bookB, bookC);
     }
 }
