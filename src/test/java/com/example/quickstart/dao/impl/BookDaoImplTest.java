@@ -61,7 +61,16 @@ public class BookDaoImplTest {
 
     @Test
     void testThatUpdateBookGenerateCorrectSql(){
+        Book book = TestDataUtil.createTestBookA();
+        underTest.update(book.getIsbn(), book);
 
+        verify(jdbcTemplate).update(
+                "SELECT isbn = ?, title = ?, author_id = ? FROM books WHERE isbn = ?",
+                book.getIsbn(),
+                book.getTitle(),
+                book.getAuthorId(),
+                "978-0-306-40615-1"
+                );
     }
 
 }
