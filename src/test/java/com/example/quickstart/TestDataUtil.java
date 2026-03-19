@@ -1,4 +1,4 @@
-package com.example.quickstart.dao.impl;
+package com.example.quickstart;
 
 import com.example.quickstart.domain.Author;
 import com.example.quickstart.domain.Book;
