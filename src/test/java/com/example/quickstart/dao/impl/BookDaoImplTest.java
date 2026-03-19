@@ -59,4 +59,9 @@ public class BookDaoImplTest {
 
     }
 
+    @Test
+    void testThatUpdateBookGenerateCorrectSql(){
+
+    }
+
 }

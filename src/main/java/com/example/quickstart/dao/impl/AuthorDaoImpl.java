@@ -41,6 +41,17 @@ public class AuthorDaoImpl implements AuthorDao {
         return jdbcTemplate.query("SELECT id, name, age FROM authors", new AuthorRowMapper());
     }
 
+    @Override
+    public void update(Long id, Author author) {
+       jdbcTemplate.update(
+               "SELECT id = ?, name = ?, age = ? FROM authors WHERE id = ?",
+               author.getId(),
+               author.getName(),
+               author.getAge(),
+               id
+               );
+    }
+
     public static class AuthorRowMapper implements RowMapper<Author>{
         @Override
         public Author mapRow(ResultSet rs, int rowNum) throws SQLException {
