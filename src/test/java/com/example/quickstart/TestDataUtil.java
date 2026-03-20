@@ -31,29 +31,29 @@ public class TestDataUtil {
                 .build();
     }
 
-//    static Book createTestBookA() {
-//        return Book.builder()
-//                .isbn("978-0-306-40615-1")
-//                .title("Beauty and the Beast")
-//                .authorId(1L)
-//                .build();
-//    }
-//
-//    static Book createTestBookB() {
-//        return Book.builder()
-//                .isbn("978-0-306-40615-2")
-//                .title("Tom & Jerry")
-//                .authorId(2L)
-//                .build();
-//    }
-//
-//    static Book createTestBookC() {
-//        return Book.builder()
-//                .isbn("978-0-306-40615-3")
-//                .title("The Lion King")
-//                .authorId(3L)
-//                .build();
-//    }
+    public static Book createTestBookA(final Author author) {
+        return Book.builder()
+                .isbn("978-0-306-40615-1")
+                .title("Beauty and the Beast")
+                .author(author)
+                .build();
+    }
+
+    public static Book createTestBookB(final Author author) {
+        return Book.builder()
+                .isbn("978-0-306-40615-2")
+                .title("Tom & Jerry")
+                .author(author)
+                .build();
+    }
+
+    public static Book createTestBookC(final Author author) {
+        return Book.builder()
+                .isbn("978-0-306-40615-3")
+                .title("The Lion King")
+                .author(author)
+                .build();
+    }
 
 
 }
