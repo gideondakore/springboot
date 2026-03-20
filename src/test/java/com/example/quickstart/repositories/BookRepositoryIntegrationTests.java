@@ -80,7 +80,7 @@ class BookRepositoryIntegrationTests {
         underTest.save(bookA);
         bookA.setTitle("UPDATED");
 
-        underTest.deleteById(bookA.getIsbn());
+        underTest.delete(bookA);
         Optional<Book> result = underTest.findById(bookA.getIsbn());
         assertThat(result).isEmpty();
     }
