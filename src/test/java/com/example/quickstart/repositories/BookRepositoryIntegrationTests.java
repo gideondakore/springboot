@@ -18,23 +18,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BookRepositoryIntegrationTests {
 
     private BookRepository underTest;
-    private AuthorRepository authorDao;
 
     @Autowired
-    public BookRepositoryIntegrationTests(BookRepository underTest, AuthorRepository authorDao){
+    public BookRepositoryIntegrationTests(BookRepository underTest){
         this.underTest = underTest;
-        this.authorDao = authorDao;
     }
 
     @Test
     void testThatBookCanBeCreatedAndRecalled(){
         Author author = TestDataUtil.createTestAuthorA();
-        authorDao.save(author);
         Book book = TestDataUtil.createTestBookA(author);
-        underTest.save(book);
+        Book saveBook = underTest.save(book);
         Optional<Book> result = underTest.findById(book.getIsbn());
         assertThat(result).isPresent();
-        assertThat(result.get()).isEqualTo(book);
+        assertThat(result.get()).isEqualTo(saveBook);
     }
 
 //    @Test
