@@ -55,17 +55,17 @@ class AuthorRepositoryIntegrationTests {
 
     }
 
-//    @Test
-//    void testThatAuthorCanBeUpdated(){
-//        Author authorA = TestDataUtil.createTestAuthorA();
-//        underTest.create(authorA);
-//        authorA.setName("UPDATED");
-//        underTest.update(authorA.getId(), authorA);
-//        Optional<Author> result = underTest.findOne(authorA.getId());
-//        assertThat(result).isPresent();
-//        assertThat(result.get()).isEqualTo(authorA);
-//
-//    }
+    @Test
+    void testThatAuthorCanBeUpdated(){
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.save(authorA);
+        authorA.setName("UPDATED");
+        Author authorSave = underTest.save(authorA);
+        Optional<Author> result = underTest.findById(authorA.getId());
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(authorSave);
+
+    }
 //
 //    @Test
 //    void testThatAuthorCanBeDeleted(){
