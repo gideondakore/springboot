@@ -16,7 +16,6 @@ public class TestDataUtil {
 
     public static Author createTestAuthorB() {
         return Author.builder()
-                .id(2L)
                 .name("Jesse Benz")
                 .age(23)
                 .build();
@@ -24,7 +23,6 @@ public class TestDataUtil {
 
     public static Author createTestAuthorC() {
         return Author.builder()
-                .id(3L)
                 .name("Andrew Casse")
                 .age(93)
                 .build();
