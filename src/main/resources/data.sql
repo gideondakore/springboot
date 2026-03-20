@@ -11,3 +11,5 @@ INSERT INTO books (isbn, title, author_id) VALUES
 ('978-0-306-40615-3', 'Widget C', 2),
 ('978-0-306-40615-4', 'Widget D', 1),
 ('978-0-306-40615-5', 'Widget E', 4);
+
+SELECT setval('author_id_seq', 5);

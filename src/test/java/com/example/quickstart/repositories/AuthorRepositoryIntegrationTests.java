@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class) // This is not necessary it is already added in the @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public class AuthorRepositoryIntegrationTests {
+class AuthorRepositoryIntegrationTests {
 
     private AuthorRepository underTest;
 
@@ -29,7 +29,7 @@ public class AuthorRepositoryIntegrationTests {
     }
 
     @Test
-    public void testThatAuthorCanBeCreatedAndRecalled(){
+    void testThatAuthorCanBeCreatedAndRecalled(){
 
         Author author = TestDataUtil.createTestAuthorA();
         underTest.save(author);

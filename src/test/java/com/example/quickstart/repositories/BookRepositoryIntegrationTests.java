@@ -1,43 +1,42 @@
-//package com.example.quickstart.repositories;
-//
-//import com.example.quickstart.dao.AuthorDao;
-//import com.example.quickstart.domain.Author;
-//import com.example.quickstart.domain.Book;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.test.annotation.DirtiesContext;
-//
-//import java.util.List;
-//import java.util.Optional;
-//import static org.assertj.core.api.Assertions.assertThat;
-//
-//@SpringBootTest
-//@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-//
-//class BookDaoImplIntegrationTests {
-//
-//    private BookDaoImpl underTest;
-//    private AuthorDao authorDao;
-//
-//    @Autowired
-//    public BookDaoImplIntegrationTests(BookDaoImpl underTest, AuthorDao authorDao){
-//        this.underTest = underTest;
-//        this.authorDao = authorDao;
-//    }
-//
-//    @Test
-//    void testThatBookCanBeCreatedAndRecalled(){
-//        Author author = TestDataUtil.createTestAuthorA();
-//        authorDao.create(author);
-//        Book book = TestDataUtil.createTestBookA();
-//        book.setAuthorId(author.getId());
-//        underTest.create(book);
-//        Optional<Book> result = underTest.findOne(book.getIsbn());
-//        assertThat(result).isPresent();
-//        assertThat(result.get()).isEqualTo(book);
-//    }
-//
+package com.example.quickstart.repositories;
+
+import com.example.quickstart.TestDataUtil;
+import com.example.quickstart.domain.Author;
+import com.example.quickstart.domain.Book;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+
+import java.util.List;
+import java.util.Optional;
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+
+class BookRepositoryIntegrationTests {
+
+    private BookRepository underTest;
+    private AuthorRepository authorDao;
+
+    @Autowired
+    public BookRepositoryIntegrationTests(BookRepository underTest, AuthorRepository authorDao){
+        this.underTest = underTest;
+        this.authorDao = authorDao;
+    }
+
+    @Test
+    void testThatBookCanBeCreatedAndRecalled(){
+        Author author = TestDataUtil.createTestAuthorA();
+        authorDao.save(author);
+        Book book = TestDataUtil.createTestBookA(author);
+        underTest.save(book);
+        Optional<Book> result = underTest.findById(book.getIsbn());
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(book);
+    }
+
 //    @Test
 //    void testThatMultipleBooksCanBeCreatedAndRecalled(){
 //
@@ -98,4 +97,4 @@
 //        Optional<Book> result = underTest.findOne("978-0-306-40615-1");
 //        assertThat(result).isEmpty();
 //    }
-//}
+}
