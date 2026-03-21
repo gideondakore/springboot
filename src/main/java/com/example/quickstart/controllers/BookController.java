@@ -3,16 +3,14 @@ package com.example.quickstart.controllers;
 import com.example.quickstart.domain.Book;
 import jakarta.validation.Valid;
 import lombok.extern.java.Log;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Log
+@RequestMapping("/books")
 public class BookController {
 
-    @GetMapping(path = "/books")
+    @GetMapping(path = "/")
     public Book retrieveBook(){
         return Book.builder()
                 .isbn("978-8-13-478627-5")
@@ -22,7 +20,7 @@ public class BookController {
                 .build();
     }
 
-    @PostMapping(path = "/books")
+    @PostMapping(path = "/")
     public Book createBook(@RequestBody @Valid final Book book){
         log.info("Got book" + book.toString());
         return book;

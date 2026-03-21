@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class Book {
 
     @Id
-    @JsonProperty(required = true)
+//    @JsonProperty(required = true)
     @NotNull(message = "Isbn is required")
     @NotEmpty(message = "Isbn cannot be blank")
     private String isbn;
