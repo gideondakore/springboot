@@ -8,10 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @Log
 public class QuickstartApplication {
 
-
 	public static void main(String[] args) {
 		SpringApplication.run(QuickstartApplication.class, args);
 	}
-
 
 }
