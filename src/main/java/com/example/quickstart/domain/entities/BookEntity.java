@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "books")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Book {
+public class BookEntity {
 
     @Id
 //    @JsonProperty(required = true)
@@ -26,10 +26,12 @@ public class Book {
     @NotEmpty(message = "Isbn cannot be blank")
     private String isbn;
 
-    @Size(min = 1, max = 50, message = "Book title length must be greater or equal to 1 but less than or equal to 50")
+    @Size(min = 1, max = 50, message = "BookEntity title length must be greater or equal to 1 but less than or equal to 50")
     private String title;
 
-    private String author;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "author_id")
+    private AuthorEntity authorEntity;
 
     @JsonProperty("year")
     private String yearPublished;
