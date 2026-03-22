@@ -18,8 +18,8 @@ public class AuthController {
         this.authorService = authorService;
     }
 
-    @PostMapping("/")
-    public AuthorDto createAuthor(@RequestBody @Valid AuthorDto author){
-       return authorService.createAuthor(author);
-    }
+//    @PostMapping("/")
+//    public AuthorDto createAuthor(@RequestBody @Valid AuthorDto author){
+//       return authorService.createAuthor(author);
+//    }
 }
