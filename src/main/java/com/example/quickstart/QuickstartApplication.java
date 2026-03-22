@@ -13,5 +13,4 @@ public class QuickstartApplication {
 		SpringApplication.run(QuickstartApplication.class, args);
 	}
 
-
 }

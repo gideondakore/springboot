@@ -1,4 +1,4 @@
-package com.example.quickstart.domain;
+package com.example.quickstart.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
