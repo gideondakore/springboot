@@ -1,4 +1,21 @@
 package com.example.quickstart.services.impl;
 
-public class AuthorServiceImpl {
+import com.example.quickstart.domain.entities.AuthorEntity;
+import com.example.quickstart.repositories.AuthorRepository;
+import com.example.quickstart.services.AuthorService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AuthorServiceImpl implements AuthorService {
+
+    private AuthorRepository authorRepository;
+
+    public AuthorServiceImpl(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+
+    @Override
+    public AuthorEntity createAuthor(AuthorEntity authorEntity) {
+       return authorRepository.save(authorEntity);
+    }
 }

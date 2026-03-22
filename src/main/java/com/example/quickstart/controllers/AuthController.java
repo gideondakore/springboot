@@ -23,7 +23,7 @@ public class AuthController {
         this.authorMapper = authorMapper;
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public AuthorDto createAuthor(@RequestBody @Valid AuthorDto author){
         AuthorEntity authorEntity = authorMapper.mapFrom(author);
         AuthorEntity savedAuthorEntity = authorService.createAuthor(authorEntity);
