@@ -29,6 +29,13 @@ public class GlobalExceptionHandler {
          return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(BookNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleBookNotFoundErrors(BookNotFoundException ex){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", ex.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleOtherErrors(Exception ex){
         Map<String, String> errors = new HashMap<>();

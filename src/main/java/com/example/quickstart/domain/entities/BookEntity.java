@@ -1,7 +1,6 @@
 package com.example.quickstart.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -21,7 +20,6 @@ import lombok.NoArgsConstructor;
 public class BookEntity {
 
     @Id
-//    @JsonProperty(required = true)
     @NotNull(message = "Isbn is required")
     @NotEmpty(message = "Isbn cannot be blank")
     private String isbn;
