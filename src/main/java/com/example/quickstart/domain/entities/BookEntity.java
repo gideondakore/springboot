@@ -31,8 +31,6 @@ public class BookEntity {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "author_id")
-    private AuthorEntity authorEntity;
+    private AuthorEntity author;
 
-    @JsonProperty("year")
-    private String yearPublished;
 }

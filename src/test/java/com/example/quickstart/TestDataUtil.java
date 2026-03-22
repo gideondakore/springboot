@@ -32,7 +32,7 @@ public class TestDataUtil {
         return BookEntity.builder()
                 .isbn("978-0-306-40615-1")
                 .title("Beauty and the Beast")
-                .authorEntity(authorEntity)
+                .author(authorEntity)
                 .build();
     }
 
@@ -40,7 +40,7 @@ public class TestDataUtil {
         return BookEntity.builder()
                 .isbn("978-0-306-40615-2")
                 .title("Tom & Jerry")
-                .authorEntity(authorEntity)
+                .author(authorEntity)
                 .build();
     }
 
@@ -48,7 +48,7 @@ public class TestDataUtil {
         return BookEntity.builder()
                 .isbn("978-0-306-40615-3")
                 .title("The Lion King")
-                .authorEntity(authorEntity)
+                .author(authorEntity)
                 .build();
     }
 
