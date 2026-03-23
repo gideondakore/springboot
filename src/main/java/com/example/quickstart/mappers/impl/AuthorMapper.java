@@ -13,5 +13,5 @@ public interface AuthorMapper extends Mapperble<AuthorEntity, AuthorDto> {
 
     @Override
     AuthorEntity mapFrom(AuthorDto authorDto);
-    
+
 }
