@@ -36,6 +36,13 @@ public class TestDataUtil {
                 .build();
     }
 
+    public static BookEntity createTestBookEntity() {
+        return BookEntity.builder()
+                .isbn("978-0-306-40615-10")
+                .title("Beauty and the Beast")
+                .build();
+    }
+
     public static BookEntity createTestBookB(final AuthorEntity authorEntity) {
         return BookEntity.builder()
                 .isbn("978-0-306-40615-2")

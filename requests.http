@@ -5,3 +5,5 @@ GET https://examples.http-client.intellij.net/get
 ### GET all authors
 GET http://localhost:8080/authors
 
+### GET all books
+GET http://localhost:8080/books

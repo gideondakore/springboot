@@ -3,6 +3,7 @@ package com.example.quickstart.controllers;
 import com.example.quickstart.TestDataUtil;
 import com.example.quickstart.domain.entities.AuthorEntity;
 import com.example.quickstart.domain.entities.BookEntity;
+import com.example.quickstart.services.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ import tools.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 
 public class BookControllerIntegrationTests {
+    @Autowired
+    private BookService bookService;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -62,5 +66,29 @@ public class BookControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.author").isEmpty()
         );
+    }
+
+    @Test
+    void testThatListBooksReturnsHttpStatus200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/books").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(
+                        MockMvcResultMatchers.status().isOk()
+                );
+    }
+
+    @Test
+    void testThatListBooksReturnsListOfAuthors() throws Exception {
+
+        BookEntity bookEntity = TestDataUtil.createTestBookEntity();
+        bookEntity.setAuthor(null);
+        bookService.createBook("978-0-306-40615-10", bookEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/books").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$[0].isbn").value(bookEntity.getIsbn())
+                ).andExpect(
+                        MockMvcResultMatchers.jsonPath("$[0].title").value(bookEntity.getTitle())
+                );
+
     }
 }
