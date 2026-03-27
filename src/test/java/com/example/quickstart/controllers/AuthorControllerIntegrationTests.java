@@ -65,7 +65,7 @@ class AuthorControllerIntegrationTests {
     }
 
     @Test
-    void testThatListAuthordReturnsHttpStatus200() throws Exception {
+    void testThatListAuthorsReturnsHttpStatus200() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/authors")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -77,7 +77,7 @@ class AuthorControllerIntegrationTests {
     }
 
     @Test
-    void testThatListAuthordReturnsListOfAuthors() throws Exception {
+    void testThatListAuthorsReturnsListOfAuthors() throws Exception {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
         authorService.createAuthor(authorEntity);
 
