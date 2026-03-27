@@ -9,7 +9,9 @@ import com.example.quickstart.services.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -26,5 +28,11 @@ public class BookServiceImpl implements BookService {
             bookEntity.setAuthor(authorEntity);
         }
         return bookRepository.save(bookEntity);
+    }
+
+    @Override
+    public List<BookEntity> findAll() {
+        Iterable<BookEntity> bookEntities = bookRepository.findAll();
+        return StreamSupport.stream(bookEntities.spliterator(), false).toList();
     }
 }
