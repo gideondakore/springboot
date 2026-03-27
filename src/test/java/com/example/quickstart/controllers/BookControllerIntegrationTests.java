@@ -65,7 +65,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    void testThatListAuthorsReturnsHttpStatus200() throws Exception {
+    void testThatListBooksReturnsHttpStatus200() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/books").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(
                         MockMvcResultMatchers.status().isOk()
