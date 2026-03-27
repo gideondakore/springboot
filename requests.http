@@ -2,6 +2,6 @@
 GET https://examples.http-client.intellij.net/get
     ?generated-in=IntelliJ IDEA
 
-###
-GET http://localhost:8080/hello
+### GET all authors
+GET http://localhost:8080/authors
 

@@ -6,6 +6,9 @@ import com.example.quickstart.services.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.StreamSupport;
+
 @Service
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
@@ -15,4 +18,12 @@ public class AuthorServiceImpl implements AuthorService {
     public AuthorEntity createAuthor(AuthorEntity authorEntity) {
         return authorRepository.save(authorEntity);
     }
+
+    @Override
+    public List<AuthorEntity> findAll() {
+        Iterable<AuthorEntity> authorEntities = authorRepository.findAll();
+        return StreamSupport.stream(authorEntities.spliterator(), false).toList();
+    }
+
+
 }

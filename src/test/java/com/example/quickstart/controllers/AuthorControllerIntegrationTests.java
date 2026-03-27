@@ -2,6 +2,8 @@ package com.example.quickstart.controllers;
 
 import com.example.quickstart.TestDataUtil;
 import com.example.quickstart.domain.entities.AuthorEntity;
+import com.example.quickstart.repositories.AuthorRepository;
+import com.example.quickstart.services.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,16 @@ import tools.jackson.databind.ObjectMapper;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
-public class AuthorControllerIntegrationTests {
+class AuthorControllerIntegrationTests {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private AuthorService authorService;
 
     @Test
     void testThatCreateAuthorSuccessfullyReturnsHttp201Created() throws Exception {
@@ -57,6 +62,35 @@ public class AuthorControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.age").value("80")
         );
+    }
+
+    @Test
+    void testThatListAuthordReturnsHttpStatus200() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(
+                        MockMvcResultMatchers.status().isOk()
+                );
+
+
+    }
+
+    @Test
+    void testThatListAuthordReturnsListOfAuthors() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        authorService.createAuthor(authorEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$[0].name").value("Abigail Rose")
+                ).andExpect(
+                        MockMvcResultMatchers.jsonPath("$[0].age").value(80)
+                ).andExpect(
+                        MockMvcResultMatchers.jsonPath("$[0].id").value(1)
+                );
+
     }
 
 }
