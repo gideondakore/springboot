@@ -2,14 +2,12 @@ package com.example.quickstart.services.impl;
 
 import com.example.quickstart.domain.entities.AuthorEntity;
 import com.example.quickstart.exceptions.AuthorNotFoundException;
-import com.example.quickstart.exceptions.BookNotFoundException;
 import com.example.quickstart.repositories.AuthorRepository;
 import com.example.quickstart.services.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -30,9 +28,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public AuthorEntity findOne(Long id) {
-        Optional<AuthorEntity> authorEntity = authorRepository.findById(id);
-        return authorEntity.orElseThrow(() -> new AuthorNotFoundException("Author Not Found!"));
+        return authorRepository.findById(id).orElseThrow(() -> new AuthorNotFoundException("Author Not Found!"));
     }
-
 
 }

@@ -38,5 +38,6 @@ public class AuthController {
     @GetMapping("/{id}")
     public AuthorDto getAuthor(@PathVariable Long id){
         AuthorEntity authorEntity = authorService.findOne(id);
+        return authorMapper.mapTo(authorEntity);
     }
 }
