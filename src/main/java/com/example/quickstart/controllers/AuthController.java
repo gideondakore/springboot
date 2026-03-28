@@ -34,4 +34,9 @@ public class AuthController {
         List<AuthorEntity> authorsEntity = authorService.findAll();
         return authorsEntity.stream().map(authorMapper::mapTo).toList();
     }
+
+    @GetMapping("/{id}")
+    public AuthorDto getAuthor(@PathVariable Long id){
+        AuthorEntity authorEntity = authorService.findOne(id);
+    }
 }

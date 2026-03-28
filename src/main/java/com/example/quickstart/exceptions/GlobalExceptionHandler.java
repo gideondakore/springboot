@@ -36,11 +36,17 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(AuthorNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleAuthorNotFoundErrors(AuthorNotFoundException ex){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", ex.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleOtherErrors(Exception ex){
         Map<String, String> errors = new HashMap<>();
 
-        log.info("ERROR OCCURED: " + ex);
         errors.put("error", "An unexpected error occurred");
         return new ResponseEntity<>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
     }

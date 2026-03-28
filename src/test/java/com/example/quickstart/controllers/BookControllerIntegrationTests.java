@@ -22,7 +22,7 @@ import tools.jackson.databind.ObjectMapper;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 
-public class BookControllerIntegrationTests {
+class BookControllerIntegrationTests {
     @Autowired
     private BookService bookService;
 
@@ -81,7 +81,7 @@ public class BookControllerIntegrationTests {
 
         BookEntity bookEntity = TestDataUtil.createTestBookEntity();
         bookEntity.setAuthor(null);
-        bookService.createBook("978-0-306-40615-10", bookEntity);
+        bookService.createBook(bookEntity.getIsbn(), bookEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/books").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(
