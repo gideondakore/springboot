@@ -2,7 +2,6 @@ package com.example.quickstart.controllers;
 
 import com.example.quickstart.TestDataUtil;
 import com.example.quickstart.domain.entities.AuthorEntity;
-import com.example.quickstart.repositories.AuthorRepository;
 import com.example.quickstart.services.AuthorService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -65,7 +64,7 @@ class AuthorControllerIntegrationTests {
     }
 
     @Test
-    void testThatListAuthorsReturnsHttpStatus200() throws Exception {
+    void testThatListAuthorsReturnsHttpStatus200Ok() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/authors")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -90,6 +89,36 @@ class AuthorControllerIntegrationTests {
                 ).andExpect(
                         MockMvcResultMatchers.jsonPath("$[0].id").value(1)
                 );
+
+    }
+
+    @Test
+    void testThatGetAuthorReturnsHttpStatus200Ok() throws Exception {
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        authorService.createAuthor(authorEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors/1")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+
+    }
+
+    @Test
+    void testThatGetAuthorsReturnsAuthor() throws Exception{
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        authorService.createAuthor(authorEntity);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors/"+authorEntity.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.id").value(authorEntity.getId())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.name").value(authorEntity.getName())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.age").value(authorEntity.getAge())
+        );
 
     }
 
