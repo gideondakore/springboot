@@ -3,6 +3,7 @@ package com.example.quickstart.services;
 import com.example.quickstart.domain.entities.AuthorEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AuthorService {
 
@@ -10,5 +11,5 @@ public interface AuthorService {
 
     List<AuthorEntity> findAll();
 
-    AuthorEntity findOne(Long id);
+    Optional<AuthorEntity> findOne(Long id);
 }
