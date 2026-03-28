@@ -22,7 +22,7 @@ import tools.jackson.databind.ObjectMapper;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
 
-public class BookControllerIntegrationTests {
+class BookControllerIntegrationTests {
     @Autowired
     private BookService bookService;
 
@@ -69,7 +69,7 @@ public class BookControllerIntegrationTests {
     }
 
     @Test
-    void testThatListBooksReturnsHttpStatus200() throws Exception {
+    void testThatListBooksReturnsHttpStatus200Ok() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/books").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(
                         MockMvcResultMatchers.status().isOk()
