@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -33,5 +34,10 @@ public class BookServiceImpl implements BookService {
     public List<BookEntity> findAll() {
         Iterable<BookEntity> bookEntities = bookRepository.findAll();
         return StreamSupport.stream(bookEntities.spliterator(), false).toList();
+    }
+
+    @Override
+    public Optional<BookEntity> findOne(String isbn) {
+        return bookRepository.findById(isbn);
     }
 }
