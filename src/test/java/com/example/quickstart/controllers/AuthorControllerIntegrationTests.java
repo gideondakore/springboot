@@ -78,7 +78,7 @@ class AuthorControllerIntegrationTests {
     @Test
     void testThatListAuthorsReturnsListOfAuthors() throws Exception {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
-        authorService.createAuthor(authorEntity);
+        authorService.save(authorEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/authors")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -95,7 +95,7 @@ class AuthorControllerIntegrationTests {
     @Test
     void testThatGetAuthorReturnsHttpStatus200Ok() throws Exception {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
-        authorService.createAuthor(authorEntity);
+        authorService.save(authorEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/authors/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -118,7 +118,7 @@ class AuthorControllerIntegrationTests {
     @Test
     void testThatGetAuthorsReturnsAuthor() throws Exception{
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
-        authorService.createAuthor(authorEntity);
+        authorService.save(authorEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/authors/"+authorEntity.getId())
                 .contentType(MediaType.APPLICATION_JSON)
