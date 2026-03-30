@@ -27,7 +27,7 @@ public class BookController {
         BookEntity bookEntity = bookMapper.mapFrom(bookDto);
         bookEntity.setIsbn(isbn);
         boolean exist = bookService.isExists(isbn);
-        BookEntity bookSave = bookService.save(isbn, bookEntity);
+        BookEntity bookSave = bookService.createUpdateBook(isbn, bookEntity);
         BookDto bookDtoSave = bookMapper.mapTo(bookSave);
 
         System.out.println("EXIST: " + exist);

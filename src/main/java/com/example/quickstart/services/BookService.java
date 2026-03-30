@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface BookService {
 
-    BookEntity save(String isbn, BookEntity bookEntity);
+    BookEntity createUpdateBook(String isbn, BookEntity bookEntity);
 
     List<BookEntity> findAll();
 

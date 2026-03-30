@@ -27,7 +27,7 @@ public class BookEntity {
     @Size(min = 1, max = 50, message = "BookEntity title length must be greater or equal to 1 but less than or equal to 50")
     private String title;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id")
     private AuthorEntity author;
 

@@ -1,6 +1,7 @@
 package com.example.quickstart.controllers;
 
 import com.example.quickstart.TestDataUtil;
+import com.example.quickstart.domain.dto.BookDto;
 import com.example.quickstart.domain.entities.AuthorEntity;
 import com.example.quickstart.domain.entities.BookEntity;
 import com.example.quickstart.repositories.BookRepository;
@@ -32,8 +33,6 @@ class BookControllerIntegrationTests {
 
     @Autowired
     private ObjectMapper objectMapper;
-    @Autowired
-    private BookRepository bookRepository;
 
     @Test
     void testThatSaveSuccessfullyReturnsHttp201Created() throws Exception {
@@ -84,7 +83,7 @@ class BookControllerIntegrationTests {
 
         BookEntity bookEntity = TestDataUtil.createTestBookEntity();
         bookEntity.setAuthor(null);
-        bookService.save(bookEntity.getIsbn(), bookEntity);
+        bookService.createUpdateBook(bookEntity.getIsbn(), bookEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/books").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(
@@ -99,7 +98,7 @@ class BookControllerIntegrationTests {
     void testThatGetBooksReturnsHttpStatus200Ok() throws Exception{
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
         BookEntity bookEntity = TestDataUtil.createTestBookA(authorEntity);
-        bookService.save(bookEntity.getIsbn(), bookEntity);
+        bookService.createUpdateBook(bookEntity.getIsbn(), bookEntity);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/books/"+bookEntity.getIsbn())
@@ -124,7 +123,7 @@ class BookControllerIntegrationTests {
     void testThatGetBooksReturnsBook() throws Exception {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
         BookEntity bookEntity = TestDataUtil.createTestBookA(authorEntity);
-        bookService.save(bookEntity.getIsbn(), bookEntity);
+        bookService.createUpdateBook(bookEntity.getIsbn(), bookEntity);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/books/"+bookEntity.getIsbn())
@@ -134,5 +133,52 @@ class BookControllerIntegrationTests {
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.title").value(bookEntity.getTitle())
         );
+    }
+
+    @Test
+    void testThatFullUpdateBookReturnsHttpStatus200NotFound() throws Exception{
+        AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
+        BookEntity bookEntity = TestDataUtil.createTestBookA(authorEntity);
+        bookService.createUpdateBook(bookEntity.getIsbn(), bookEntity);
+
+        AuthorEntity authorEntityB = TestDataUtil.createTestAuthorB();
+        BookEntity bookEntityB = TestDataUtil.createTestBookB(authorEntityB);
+        bookEntityB.setIsbn(bookEntity.getIsbn());
+
+        String json = objectMapper.writeValueAsString(bookEntityB);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/books/"+bookEntity.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        ).andExpect(
+                MockMvcResultMatchers.status().isOk()
+        );
+
+    }
+
+    @Test
+    void testThatFullUpdateUpdatesExistingBook() throws Exception {
+        BookEntity bookEntity = TestDataUtil.createTestBookA(null);
+        BookEntity savedBookEntity = bookService.createUpdateBook(bookEntity.getIsbn(), bookEntity);
+
+
+        BookEntity bookEntityB = TestDataUtil.createTestBookB(null);
+
+
+        String json = objectMapper.writeValueAsString(bookEntityB);
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.put("/books/"+savedBookEntity.getIsbn())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.isbn").value(savedBookEntity.getIsbn())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.title").value(bookEntityB.getTitle())
+        ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.author").value(savedBookEntity.getAuthor())
+        );
+
     }
 }
