@@ -46,19 +46,18 @@ public class AuthController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AuthorDto> fullUpdate(@PathVariable Long id, @RequestBody AuthorDto authorDto){
+    public ResponseEntity<AuthorDto> fullUpdateAuthor(@PathVariable Long id, @RequestBody AuthorDto authorDto){
 
-        if(!authorService.exists(id)){
+        if(!authorService.isExists(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         authorDto.setId(id);
-
         AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
-
-        AuthorEntity savedAuthor = authorService.save(authorEntity);
-
-        return new ResponseEntity<>(authorMapper.mapTo(savedAuthor), HttpStatus.OK);
-
+        AuthorEntity saveAuthorEntity = authorService.save(authorEntity);
+        return new ResponseEntity<>(
+                authorMapper.mapTo(saveAuthorEntity),
+                HttpStatus.OK
+        );
     }
 }
