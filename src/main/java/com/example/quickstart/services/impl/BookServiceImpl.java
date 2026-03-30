@@ -35,4 +35,9 @@ public class BookServiceImpl implements BookService {
         Iterable<BookEntity> bookEntities = bookRepository.findAll();
         return StreamSupport.stream(bookEntities.spliterator(), false).toList();
     }
+
+    @Override
+    public Optional<BookEntity> findOne(String isbn) {
+        return bookRepository.findById(isbn);
+    }
 }

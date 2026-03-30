@@ -2,6 +2,7 @@ package com.example.quickstart.controllers;
 
 import com.example.quickstart.domain.dto.AuthorDto;
 import com.example.quickstart.domain.entities.AuthorEntity;
+import com.example.quickstart.exceptions.AuthorNotFoundException;
 import com.example.quickstart.mappers.impl.AuthorMapper;
 import com.example.quickstart.services.AuthorService;
 import jakarta.validation.Valid;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/authors")
@@ -33,5 +35,13 @@ public class AuthController {
     public List<AuthorDto> listAuthors(){
         List<AuthorEntity> authorsEntity = authorService.findAll();
         return authorsEntity.stream().map(authorMapper::mapTo).toList();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AuthorDto> getAuthor(@PathVariable Long id){
+        Optional<AuthorEntity> authorEntity = authorService.findOne(id);
+
+        return authorEntity.map(author -> ResponseEntity.ok(authorMapper.mapTo(author)))
+                .orElseThrow(() -> new AuthorNotFoundException("Unable to fetch an Author. Please try again later"));
     }
 }
