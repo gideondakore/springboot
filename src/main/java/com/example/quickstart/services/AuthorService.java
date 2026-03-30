@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface AuthorService {
 
-    AuthorEntity save(AuthorEntity authorEntity);
+    AuthorEntity createUpdateBook(AuthorEntity authorEntity);
 
     List<AuthorEntity> findAll();
 

@@ -25,9 +25,22 @@ public class BookController {
     @PutMapping("/{isbn}")
     public ResponseEntity<BookDto> save(@PathVariable @Valid String isbn, @RequestBody BookDto bookDto){
         BookEntity bookEntity = bookMapper.mapFrom(bookDto);
+        bookEntity.setIsbn(isbn);
+        boolean exist = bookService.isExists(isbn);
         BookEntity bookSave = bookService.save(isbn, bookEntity);
         BookDto bookDtoSave = bookMapper.mapTo(bookSave);
-        return new ResponseEntity<>(bookDtoSave, HttpStatus.CREATED);
+
+        System.out.println("EXIST: " + exist);
+
+
+        if(exist){
+            System.out.println("OK UPDATED");
+            return new ResponseEntity<>(bookDtoSave, HttpStatus.OK);
+        }else {
+            System.out.println("RESOURCE CREATED");
+            return new ResponseEntity<>(bookDtoSave, HttpStatus.CREATED);
+        }
+
     }
 
     @GetMapping()
@@ -43,23 +56,6 @@ public class BookController {
         ).orElseThrow(
                 () -> new BookNotFoundException("Book Not Found.")
         );
-    }
-
-
-    @PutMapping("/update/{isbn}")
-    public ResponseEntity<BookDto> fullUpdateBook(@PathVariable String isbn, @RequestBody BookDto bookDto){
-
-        if(!bookService.isExists(isbn)){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        bookDto.setIsbn(isbn);
-
-        BookEntity bookEntity = bookMapper.mapFrom(bookDto);
-        BookEntity savedBook = bookService.save(isbn , bookEntity);
-
-        return new ResponseEntity<>(bookMapper.mapTo(savedBook), HttpStatus.OK);
-
     }
 
 }

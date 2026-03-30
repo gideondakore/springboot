@@ -79,7 +79,7 @@ class AuthorControllerIntegrationTests {
     @Test
     void testThatListAuthorsReturnsListOfAuthors() throws Exception {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
-        authorService.save(authorEntity);
+        authorService.createUpdateBook(authorEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/authors")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -96,7 +96,7 @@ class AuthorControllerIntegrationTests {
     @Test
     void testThatGetAuthorReturnsHttpStatus200Ok() throws Exception {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
-        authorService.save(authorEntity);
+        authorService.createUpdateBook(authorEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/authors/1")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -119,7 +119,7 @@ class AuthorControllerIntegrationTests {
     @Test
     void testThatGetAuthorsReturnsAuthor() throws Exception{
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
-        authorService.save(authorEntity);
+        authorService.createUpdateBook(authorEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/authors/"+authorEntity.getId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -150,7 +150,7 @@ class AuthorControllerIntegrationTests {
     @Test
     void testThatFullUpdateAuthorReturnsHttpStatus200Found() throws Exception {
         AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorA();
-        AuthorEntity savedAuthor = authorService.save(testAuthorEntityA);
+        AuthorEntity savedAuthor = authorService.createUpdateBook(testAuthorEntityA);
 
         AuthorDto authorDto = TestDataUtil.createTestAuthorDto();
         String authorDtoJson = objectMapper.writeValueAsString(authorDto);
@@ -168,7 +168,7 @@ class AuthorControllerIntegrationTests {
     @Test
     void testThatFullUpdateUpdatesExistingAuthor() throws Exception {
         AuthorEntity testAuthorEntityA = TestDataUtil.createTestAuthorA();
-        AuthorEntity savedAuthor = authorService.save(testAuthorEntityA);
+        AuthorEntity savedAuthor = authorService.createUpdateBook(testAuthorEntityA);
 
         AuthorEntity authorDto = TestDataUtil.createTestAuthorB();
         authorDto.setId(savedAuthor.getId());
