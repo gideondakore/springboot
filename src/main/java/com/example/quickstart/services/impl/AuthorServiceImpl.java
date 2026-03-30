@@ -16,7 +16,7 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
 
     @Override
-    public AuthorEntity createAuthor(AuthorEntity authorEntity) {
+    public AuthorEntity createUpdateBook(AuthorEntity authorEntity) {
         return authorRepository.save(authorEntity);
     }
 

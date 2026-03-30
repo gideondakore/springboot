@@ -22,12 +22,12 @@ public class AuthController {
 
     private final AuthorService authorService;
     private final AuthorMapper authorMapper;
-    
+
 
     @PostMapping("")
     public ResponseEntity<AuthorDto> createAuthor(@RequestBody @Valid AuthorDto author){
         AuthorEntity authorEntity = authorMapper.mapFrom(author);
-        AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
+        AuthorEntity savedAuthorEntity = authorService.createUpdateBook(authorEntity);
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);
     }
 
@@ -42,7 +42,7 @@ public class AuthController {
         Optional<AuthorEntity> authorEntity = authorService.findOne(id);
 
         return authorEntity.map(author -> ResponseEntity.ok(authorMapper.mapTo(author)))
-                .orElseThrow(() -> new AuthorNotFoundException("Unable to fetch an Author. Please try again later"));
+                .orElseThrow(() -> new AuthorNotFoundException("Author Not Found!"));
     }
 
     @PutMapping("/{id}")
@@ -54,7 +54,7 @@ public class AuthController {
 
         authorDto.setId(id);
         AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
-        AuthorEntity saveAuthorEntity = authorService.save(authorEntity);
+        AuthorEntity saveAuthorEntity = authorService.createUpdateBook(authorEntity);
         return new ResponseEntity<>(
                 authorMapper.mapTo(saveAuthorEntity),
                 HttpStatus.OK
