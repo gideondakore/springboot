@@ -1,5 +1,6 @@
 package com.example.quickstart;
 
+import com.example.quickstart.domain.dto.AuthorDto;
 import com.example.quickstart.domain.entities.AuthorEntity;
 import com.example.quickstart.domain.entities.BookEntity;
 
@@ -9,6 +10,14 @@ public class TestDataUtil {
 
     public static AuthorEntity createTestAuthorA() {
         return AuthorEntity.builder()
+                .name("Abigail Rose")
+                .age(80)
+                .build();
+    }
+
+    public static AuthorDto createTestAuthorDto() {
+        return AuthorDto.builder()
+                .id(1L)
                 .name("Abigail Rose")
                 .age(80)
                 .build();

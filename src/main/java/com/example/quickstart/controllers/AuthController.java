@@ -42,7 +42,7 @@ public class AuthController {
         Optional<AuthorEntity> authorEntity = authorService.findOne(id);
 
         return authorEntity.map(author -> ResponseEntity.ok(authorMapper.mapTo(author)))
-                .orElseThrow(() -> new AuthorNotFoundException("Unable to fetch an Author. Please try again later"));
+                .orElseThrow(() -> new AuthorNotFoundException("Author Not Found!"));
     }
 
     @PutMapping("/{id}")

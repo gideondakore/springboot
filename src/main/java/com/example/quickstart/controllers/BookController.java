@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.print.Book;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +23,9 @@ public class BookController {
     private final BookService bookService;
 
     @PutMapping("/{isbn}")
-    public ResponseEntity<BookDto> createBook(@PathVariable @Valid String isbn, @RequestBody BookDto bookDto){
+    public ResponseEntity<BookDto> save(@PathVariable @Valid String isbn, @RequestBody BookDto bookDto){
         BookEntity bookEntity = bookMapper.mapFrom(bookDto);
-        BookEntity bookSave = bookService.createBook(isbn, bookEntity);
+        BookEntity bookSave = bookService.save(isbn, bookEntity);
         BookDto bookDtoSave = bookMapper.mapTo(bookSave);
         return new ResponseEntity<>(bookDtoSave, HttpStatus.CREATED);
     }
@@ -44,6 +43,23 @@ public class BookController {
         ).orElseThrow(
                 () -> new BookNotFoundException("Book Not Found.")
         );
+    }
+
+
+    @PutMapping("/update/{isbn}")
+    public ResponseEntity<BookDto> fullUpdateBook(@PathVariable String isbn, @RequestBody BookDto bookDto){
+
+        if(!bookService.isExists(isbn)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        bookDto.setIsbn(isbn);
+
+        BookEntity bookEntity = bookMapper.mapFrom(bookDto);
+        BookEntity savedBook = bookService.save(isbn , bookEntity);
+
+        return new ResponseEntity<>(bookMapper.mapTo(savedBook), HttpStatus.OK);
+
     }
 
 }

@@ -36,7 +36,7 @@ class BookControllerIntegrationTests {
     private BookRepository bookRepository;
 
     @Test
-    void testThatCreateBookSuccessfullyReturnsHttp201Created() throws Exception {
+    void testThatSaveSuccessfullyReturnsHttp201Created() throws Exception {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
         BookEntity bookEntity = TestDataUtil.createTestBookA(authorEntity);
         bookEntity.setAuthor(null);
@@ -84,7 +84,7 @@ class BookControllerIntegrationTests {
 
         BookEntity bookEntity = TestDataUtil.createTestBookEntity();
         bookEntity.setAuthor(null);
-        bookService.createBook(bookEntity.getIsbn(), bookEntity);
+        bookService.save(bookEntity.getIsbn(), bookEntity);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/books").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(
@@ -99,7 +99,7 @@ class BookControllerIntegrationTests {
     void testThatGetBooksReturnsHttpStatus200Ok() throws Exception{
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
         BookEntity bookEntity = TestDataUtil.createTestBookA(authorEntity);
-        bookService.createBook(bookEntity.getIsbn(), bookEntity);
+        bookService.save(bookEntity.getIsbn(), bookEntity);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/books/"+bookEntity.getIsbn())
@@ -124,7 +124,7 @@ class BookControllerIntegrationTests {
     void testThatGetBooksReturnsBook() throws Exception {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
         BookEntity bookEntity = TestDataUtil.createTestBookA(authorEntity);
-        bookService.createBook(bookEntity.getIsbn(), bookEntity);
+        bookService.save(bookEntity.getIsbn(), bookEntity);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/books/"+bookEntity.getIsbn())
