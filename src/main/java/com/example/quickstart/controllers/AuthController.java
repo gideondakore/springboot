@@ -27,7 +27,7 @@ public class AuthController {
     @PostMapping("")
     public ResponseEntity<AuthorDto> createAuthor(@RequestBody @Valid AuthorDto author){
         AuthorEntity authorEntity = authorMapper.mapFrom(author);
-        AuthorEntity savedAuthorEntity = authorService.createAuthor(authorEntity);
+        AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);
     }
 
@@ -43,5 +43,21 @@ public class AuthController {
 
         return authorEntity.map(author -> ResponseEntity.ok(authorMapper.mapTo(author)))
                 .orElseThrow(() -> new AuthorNotFoundException("Unable to fetch an Author. Please try again later"));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AuthorDto> fullUpdateAuthor(@PathVariable Long id, @RequestBody AuthorDto authorDto){
+
+        if(!authorService.isExists(id)){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        authorDto.setId(id);
+        AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
+        AuthorEntity saveAuthorEntity = authorService.save(authorEntity);
+        return new ResponseEntity<>(
+                authorMapper.mapTo(saveAuthorEntity),
+                HttpStatus.OK
+        );
     }
 }
