@@ -106,6 +106,16 @@ class AuthorControllerIntegrationTests {
     }
 
     @Test
+    void testThatGetAuthorReturnsHttpStatus404NotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/authors/19848")
+                .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound()
+        );
+
+    }
+
+    @Test
     void testThatGetAuthorsReturnsAuthor() throws Exception{
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
         authorService.createAuthor(authorEntity);

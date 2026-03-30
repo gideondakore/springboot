@@ -110,6 +110,17 @@ class BookControllerIntegrationTests {
     }
 
     @Test
+    void testThatGetBooksReturnsHttpStatus404NotFound() throws Exception{
+
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/books/978-0-306-40615-1748-28923")
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(
+                MockMvcResultMatchers.status().isNotFound()
+        );
+    }
+
+    @Test
     void testThatGetBooksReturnsBook() throws Exception {
         AuthorEntity authorEntity = TestDataUtil.createTestAuthorA();
         BookEntity bookEntity = TestDataUtil.createTestBookA(authorEntity);
