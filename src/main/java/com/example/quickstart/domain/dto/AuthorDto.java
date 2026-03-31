@@ -10,9 +10,7 @@ public class AuthorDto {
 
     private Long id;
 
-    @NonNull
     private String name;
 
-    @NonNull
     private Integer age;
 }
