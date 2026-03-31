@@ -1,10 +1,8 @@
 package com.example.quickstart.controllers;
 
 import com.example.quickstart.TestDataUtil;
-import com.example.quickstart.domain.dto.BookDto;
 import com.example.quickstart.domain.entities.AuthorEntity;
 import com.example.quickstart.domain.entities.BookEntity;
-import com.example.quickstart.repositories.BookRepository;
 import com.example.quickstart.services.BookService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
