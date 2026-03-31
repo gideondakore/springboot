@@ -1,6 +1,7 @@
 package com.example.quickstart.services.impl;
 
 import com.example.quickstart.domain.entities.AuthorEntity;
+import com.example.quickstart.exceptions.AuthorNotFoundException;
 import com.example.quickstart.repositories.AuthorRepository;
 import com.example.quickstart.services.AuthorService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,20 @@ public class AuthorServiceImpl implements AuthorService {
     public boolean isExists(Long id) {
 
         return authorRepository.existsById(id);
+    }
+
+    @Override
+    public AuthorEntity partialUpdate(Long id, AuthorEntity authorEntity) {
+
+        authorEntity.setId(id);
+
+        return authorRepository.findById(id).map(existingAuthor -> {
+            Optional.ofNullable(authorEntity.getName()).ifPresent(existingAuthor::setName);
+            Optional.ofNullable(authorEntity.getAge()).ifPresent(existingAuthor::setAge);
+            return authorRepository.save(existingAuthor);
+        }).orElseThrow(() -> new AuthorNotFoundException("Author does not exist"));
+
+
     }
 
 }
