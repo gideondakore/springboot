@@ -30,14 +30,9 @@ public class BookController {
         BookEntity bookSave = bookService.createUpdateBook(isbn, bookEntity);
         BookDto bookDtoSave = bookMapper.mapTo(bookSave);
 
-        System.out.println("EXIST: " + exist);
-
-
         if(exist){
-            System.out.println("OK UPDATED");
             return new ResponseEntity<>(bookDtoSave, HttpStatus.OK);
         }else {
-            System.out.println("RESOURCE CREATED");
             return new ResponseEntity<>(bookDtoSave, HttpStatus.CREATED);
         }
 
@@ -56,6 +51,17 @@ public class BookController {
         ).orElseThrow(
                 () -> new BookNotFoundException("Book Not Found.")
         );
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<BookDto> partialUpdate(@PathVariable("id") String isbn, @RequestBody BookDto bookDto){
+
+        BookEntity bookEntity = bookMapper.mapFrom(bookDto);
+        BookEntity bookSave = bookService.partialUpdate(isbn, bookEntity);
+        BookDto bookDtoSave = bookMapper.mapTo(bookSave);
+
+        return new ResponseEntity<>(bookDtoSave, HttpStatus.OK);
+
     }
 
 }
