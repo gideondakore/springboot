@@ -17,7 +17,6 @@ services:
       interval: 10s
       retries: 5
 
-
   app:
     container_name: quickstart-spring-app
     build:
@@ -37,6 +36,12 @@ services:
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
     restart: always
+    develop:
+      watch:
+        - action: rebuild
+          path: pom.xml
+        - action: rebuild
+          path: ./src
 
 networks:
   quickstart-network:

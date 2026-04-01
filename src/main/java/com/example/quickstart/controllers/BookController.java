@@ -64,4 +64,11 @@ public class BookController {
 
     }
 
+    @DeleteMapping("/{isbn}")
+    public ResponseEntity<Void> deleteBook(@PathVariable String isbn){
+        bookService.delete(isbn);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
