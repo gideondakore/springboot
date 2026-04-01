@@ -17,7 +17,7 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
 
     @Override
-    public AuthorEntity createUpdateBook(AuthorEntity authorEntity) {
+    public AuthorEntity save(AuthorEntity authorEntity) {
         return authorRepository.save(authorEntity);
     }
 
@@ -46,6 +46,11 @@ public class AuthorServiceImpl implements AuthorService {
             return authorRepository.save(existingAuthor);
         }).orElseThrow(() -> new AuthorNotFoundException("Author does not exist"));
 
+    }
+
+    @Override
+    public void delete(Long id) {
+        authorRepository.deleteById(id);
     }
 
 }

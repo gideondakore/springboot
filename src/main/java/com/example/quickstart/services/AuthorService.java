@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface AuthorService {
 
-    AuthorEntity createUpdateBook(AuthorEntity authorEntity);
+    AuthorEntity save(AuthorEntity authorEntity);
 
     List<AuthorEntity> findAll();
 
@@ -16,4 +16,6 @@ public interface AuthorService {
     boolean isExists(Long id);
 
     AuthorEntity partialUpdate(Long id, AuthorEntity authorEntity);
+
+    void delete(Long id);
 }

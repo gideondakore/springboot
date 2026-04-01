@@ -27,7 +27,7 @@ public class AuthController {
     @PostMapping("")
     public ResponseEntity<AuthorDto> createAuthor(@RequestBody @Valid AuthorDto author){
         AuthorEntity authorEntity = authorMapper.mapFrom(author);
-        AuthorEntity savedAuthorEntity = authorService.createUpdateBook(authorEntity);
+        AuthorEntity savedAuthorEntity = authorService.save(authorEntity);
         return new ResponseEntity<>(authorMapper.mapTo(savedAuthorEntity), HttpStatus.CREATED);
     }
 
@@ -54,7 +54,7 @@ public class AuthController {
 
         authorDto.setId(id);
         AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
-        AuthorEntity saveAuthorEntity = authorService.createUpdateBook(authorEntity);
+        AuthorEntity saveAuthorEntity = authorService.save(authorEntity);
         return new ResponseEntity<>(
                 authorMapper.mapTo(saveAuthorEntity),
                 HttpStatus.OK
@@ -70,5 +70,12 @@ public class AuthController {
         AuthorEntity authorEntity = authorMapper.mapFrom(authorDto);
         AuthorEntity updatedAuthor = authorService.partialUpdate(id, authorEntity);
         return new ResponseEntity<>(authorMapper.mapTo(updatedAuthor), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAuthor(@PathVariable Long id){
+        authorService.delete(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
