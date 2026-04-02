@@ -16,6 +16,8 @@ services:
       timeout: 5s
       interval: 10s
       retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql
 
   app:
     container_name: quickstart-spring-app
@@ -46,3 +48,6 @@ services:
 networks:
   quickstart-network:
     driver: bridge
+
+volumes:
+  postgres_data:

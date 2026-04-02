@@ -5,8 +5,9 @@ import com.example.quickstart.domain.entities.BookEntity;
 import com.example.quickstart.exceptions.BookNotFoundException;
 import com.example.quickstart.mappers.impl.BookMapper;
 import com.example.quickstart.services.BookService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class BookController {
     private final BookService bookService;
 
     @PutMapping("/{isbn}")
-    public ResponseEntity<BookDto> save(@PathVariable @Valid String isbn, @RequestBody BookDto bookDto){
+    public ResponseEntity<BookDto> save(@PathVariable String isbn, @RequestBody BookDto bookDto){
         BookEntity bookEntity = bookMapper.mapFrom(bookDto);
         bookEntity.setIsbn(isbn);
         boolean exist = bookService.isExists(isbn);
@@ -39,9 +40,9 @@ public class BookController {
     }
 
     @GetMapping()
-    public List<BookDto> listBooks(){
-       List<BookEntity> bookEntity = bookService.findAll();
-       return bookEntity.stream().map(bookMapper::mapTo).toList();
+    public Page<BookDto> listBooks(Pageable pageable){
+       Page<BookEntity> bookEntity = bookService.findAll(pageable);
+       return bookEntity.map(bookMapper::mapTo);
     }
 
     @GetMapping("/{id}")

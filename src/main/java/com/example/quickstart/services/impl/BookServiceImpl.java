@@ -6,6 +6,8 @@ import com.example.quickstart.repositories.AuthorRepository;
 import com.example.quickstart.repositories.BookRepository;
 import com.example.quickstart.services.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
@@ -29,6 +31,11 @@ public class BookServiceImpl implements BookService {
     public List<BookEntity> findAll() {
         Iterable<BookEntity> bookEntities = bookRepository.findAll();
         return StreamSupport.stream(bookEntities.spliterator(), false).toList();
+    }
+
+    @Override
+    public Page<BookEntity> findAll(Pageable pageable) {
+        return bookRepository.findAll(pageable);
     }
 
     @Override
