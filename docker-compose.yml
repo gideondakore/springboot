@@ -1,8 +1,48 @@
 services:
   db:
-    image: postgres
+    image: postgres:18.3-alpine3.23
+    container_name: quickstart-db
     ports:
       - "5432:5432"
     restart: always
     environment:
-      POSTGRES_PASSWORD: changeinprod!
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - quickstart-network
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${DB_NAME:-postgres}"]
+      timeout: 5s
+      interval: 10s
+      retries: 5
+
+  app:
+    container_name: quickstart-spring-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - quickstart-network
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+    restart: always
+    develop:
+      watch:
+        - action: rebuild
+          path: pom.xml
+        - action: rebuild
+          path: ./src
+
+networks:
+  quickstart-network:
+    driver: bridge
