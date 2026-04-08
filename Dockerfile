@@ -3,10 +3,11 @@ FROM maven:4.0.0-rc-5-eclipse-temurin-25-alpine AS build
 WORKDIR /app
 
 COPY pom.xml .
-RUN mvn dependency:go-offline -B
 
 COPY src ./src
-RUN mvn clean package -DskipTests -B
+
+RUN --mount=type=cache,target=/root/.m2 \
+    mvn clean package -DskipTests
 
 
 FROM eclipse-temurin:25.0.2_10-jre-ubi10-minimal
