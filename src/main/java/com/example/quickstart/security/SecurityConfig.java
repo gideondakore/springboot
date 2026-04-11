@@ -1,5 +1,6 @@
 package com.example.quickstart.security;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -15,7 +16,10 @@ public class SecurityConfig {
                 .csrf(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
+                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(
+                        (request, response, authenticationException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication required")
+                ));
 
         return http.build();
     }
