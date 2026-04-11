@@ -17,7 +17,11 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-                .exceptionHandling(ex -> ex.authenticationEntryPoint(
+                .exceptionHandling(ex -> ex
+                        .accessDeniedHandler(
+                                (request, response, accessDeniedException) -> response.sendError(HttpServletResponse.SC_FORBIDDEN, "FORBIDDEN")
+                        )
+                        .authenticationEntryPoint(
                         (request, response, authenticationException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication required")
                 ));
 
